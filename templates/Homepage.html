@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block categorycontent %}
+
+   {% for category in categories %}
+        <a href="{% url 'products:prod-category' category_id=category.id %}" class="list-group-item"> {{ category.name }}</a>
+    {% endfor %}
+{% endblock %}
+
+
+{% block content %}
+
+
+ <br><br>
+
+        <div class="row">
+           {% for prod in products %}
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                  <a href="{{ prod.get_absolute_url }}"><img class="card-img-top" src={{ prod.photo }} alt=""></a>
+                  <div class="card-body">
+                    <h4 class="card-title">
+                      <a href="{{ prod.get_absolute_url }}">{{ prod.name }}</a>
+                    </h4>
+                    <h5>${{ prod.price}}</h5>
+                    <p class="card-text">{{ prod.description }}</p>
+                  </div>
+                  <div class="card-footer">
+                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                  </div>
+                </div>
+              </div>
+           {% endfor %}
+
+
+        </div>
+
+{% endblock %}
+
