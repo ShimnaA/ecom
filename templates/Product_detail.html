@@ -15,6 +15,9 @@
             <p class="card-text">{{ product.description }}</p>
             <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
             4.0 stars
+              <a href="{{ product.get_add_to_cart_url }}"  class="btn btn-primary" >Add To Cart</a>
+              <a href="{{ product.get_remove_from_cart_url }}"  class="btn btn-danger" >Remove from Cart</a>
+
           </div>
         </div>
      <div class="card card-outline-secondary my-4">

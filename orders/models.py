@@ -1,6 +1,6 @@
 from django.db import models
 from products.models import Product
-from django.conf import settings
+from django.contrib.auth.models import User
 
 
 class OrderItem(models.Model):
@@ -9,6 +9,10 @@ class OrderItem(models.Model):
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
 
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    order_date = models.DateTimeField(auto_now_add=True)
-    ordered = models.BooleanField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    start_date = models.DateTimeField(auto_now_add=True)
+    ordered_date = models.DateTimeField(null=True)
+    is_ordered = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username
