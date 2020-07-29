@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+<br>
+<div class="table-responsive text-nowrap">
+<h2> Order Summary</h2>
+  <table class="table">
+    <thead>
+      <tr>
+          <th scope="col">#</th>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total Product Price</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for order_item in order_items %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ order_item.product.name }}</td>
+            <td>{{ order_item.product.price }}</td>
+            <td>{{ order_item.quantity }}</td>
+            <td>${{ order_item.get_total_item_price }}</td>
+          </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="4">Order Total</td>
+        <td>{{ order_total_price }}</td>
+    </tr>
+    <tr>
+        <td colspan="5"> <a class="btn btn-primary float-right" href="/checkout/"> Proceed to Checkout</a></td>
+
+    </tr>
+
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}
+

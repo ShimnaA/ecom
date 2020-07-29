@@ -31,21 +31,23 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
 
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home</a>
-          </li>
+
           {% if request.user.is_authenticated %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'orders:order-summary' %}">Cart</a>
+          </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
 
           {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'accounts:register' %}">Signup</a>
               </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="{% url 'login' %}">Login</a>
-              </li>
+
           {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>

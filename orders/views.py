@@ -2,7 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from products.models import Product
 from .models import Order, OrderItem
 from django.contrib import messages
+from django.views.generic import View
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+@login_required
 def add_to_cart(request, slug):
     product = get_object_or_404(Product, slug=slug)
     order_qs = Order.objects.filter(user=request.user, is_ordered=False)
@@ -26,6 +31,7 @@ def add_to_cart(request, slug):
         messages.info(request, "This item was added to your cart")
     return redirect("products:product-detail", pk=product.id)
 
+@login_required
 def remove_from_cart(request, slug):
     print("hello")
     product = get_object_or_404(Product, slug=slug)
@@ -46,5 +52,23 @@ def remove_from_cart(request, slug):
     else:
         messages.info(request, "You do not have an active order")
         return redirect("products:product-detail", pk=product.id)
+
+
+class OrderSummaryView(LoginRequiredMixin,View):
+    def get(self, *args, **kwargs):
+        try:
+            order = Order.objects.get(user=self.request.user, is_ordered=False)
+            order_items = order.orderitem_set.all()
+            context = {
+                'order_items': order_items,
+                'order_total_price': order.get_total_order_price,
+            }
+            return render(self.request, 'order_summary.html', context)
+        except ObjectDoesNotExist:
+            messages.info(self.request, "You do not have an active order")
+            return redirect("/")
+
+
+
 
 
