@@ -23,16 +23,16 @@
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ order_item.product.name }}</td>
             <td>{{ order_item.product.price }}</td>
-            <td>{{ order_item.quantity }}</td>
+            <td>{{ order_item.quantity }} </td>
             <td>${{ order_item.get_total_item_price }}</td>
           </tr>
     {% endfor %}
     <tr>
         <td colspan="4">Order Total</td>
-        <td>{{ order_total_price }}</td>
+        <td>${{ order_total_price }}</td>
     </tr>
     <tr>
-        <td colspan="5"> <a class="btn btn-primary float-right" href="/checkout/"> Proceed to Checkout</a></td>
+        <td colspan="5"> <a class="btn btn-primary float-right" href="/cart/checkout/"> Proceed to Checkout</a></td>
 
     </tr>
 

@@ -28,3 +28,5 @@ class Order(models.Model):
         for orderitem in self.orderitem_set.all():
             total += orderitem.get_total_item_price()
         return total
+
+

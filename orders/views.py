@@ -6,6 +6,7 @@ from django.views.generic import View
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import CheckoutForm
 
 @login_required
 def add_to_cart(request, slug):
@@ -54,7 +55,7 @@ def remove_from_cart(request, slug):
         return redirect("products:product-detail", pk=product.id)
 
 
-class OrderSummaryView(LoginRequiredMixin,View):
+class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
             order = Order.objects.get(user=self.request.user, is_ordered=False)
@@ -69,6 +70,23 @@ class OrderSummaryView(LoginRequiredMixin,View):
             return redirect("/")
 
 
+class CheckoutView(View):
+    def get(self, *args, **kwargs):
+        form = CheckoutForm()
+        order = Order.objects.get(user=self.request.user, is_ordered=False)
+        order_items = order.orderitem_set.all()
+        context = {
+            'form': form,
+            'order_items': order_items,
+            'order_total_price': order.get_total_order_price,
+        }
+        return render(self.request, "checkout1.html", context)
 
-
+    def post(self, *args, **kwargs):
+        form = CheckoutForm(self.request.POST or None)
+        if form.is_valid():
+            print("form is valid")
+            print(form.cleaned_data)
+            #return redirect("orders:checkout")
+            return redirect("/")
 
