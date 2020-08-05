@@ -12,7 +12,6 @@ class CheckoutForm(forms.Form):
         'placeholder': '123 Main Street'
     }))
     apartment_address = forms.CharField(required=False)
-    #country = CountryField(blank_label='(select country)')
     country = CountryField(blank_label='(select country)').formfield(
         required=False,
         widget=CountrySelectWidget(attrs={

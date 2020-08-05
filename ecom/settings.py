@@ -128,3 +128,5 @@ LOGIN_REDIRECT_URL = '/'
 
 #cryspy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
