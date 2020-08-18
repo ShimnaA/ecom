@@ -42,7 +42,7 @@ def productdetail(request, pk):
         'categories': categories,
         'reviews': review_qs
     }
-    return render(request, 'product_detail.html', context)
+    return render(request, 'Product_detail.html', context)
 
 
 def review(request, product_id):
